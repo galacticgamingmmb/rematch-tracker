@@ -1,12 +1,22 @@
 import express from 'express';
 import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.get('/rango', (req, res) => {
-    const data = fs.readFileSync('data.txt', 'utf-8');
-    res.send(data);
+    const filePath = path.join(__dirname, 'data.txt'); // o 'datos.json'
+    if (fs.existsSync(filePath)) {
+        const data = fs.readFileSync(filePath, 'utf-8');
+        res.type('text/plain').send(data);
+    } else {
+        res.status(404).send('Archivo no encontrado');
+    }
 });
 
 app.listen(PORT, () => {
