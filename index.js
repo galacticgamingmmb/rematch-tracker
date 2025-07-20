@@ -24,4 +24,12 @@ async function getDataFromWebPage() {
     await browser.close();
 }
 
-getDataFromWebPage();
+async function run() {
+  await getDataFromWebPage();
+  setInterval(async () => {
+    await getDataFromWebPage();
+  }, 5 * 60 * 1000);
+}
+
+run();
+
