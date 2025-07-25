@@ -31,4 +31,4 @@ async function run() {
   }, 5 * 60 * 1000);
 }
 
-run();
+run()
